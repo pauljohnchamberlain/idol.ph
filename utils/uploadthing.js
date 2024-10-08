@@ -1,6 +1,5 @@
-import { generateComponents } from "@uploadthing/react";
- 
-import  OurFileRouter  from "@/server/uploadthing";
- 
-export const { UploadButton, UploadDropzone, Uploader } =
-  generateComponents();
+import { UploadButton, UploadDropzone, Uploader } from '@uploadthing/react';
+
+import OurFileRouter from '@/server/uploadthing';
+
+export { UploadButton, UploadDropzone, Uploader };

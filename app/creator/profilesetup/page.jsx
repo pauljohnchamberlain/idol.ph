@@ -1,11 +1,13 @@
+'use client';
+
 import { UploadButton } from '@/utils/uploadthing';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-export default function Example() {
+export default function CreatorProfileSetup() {
 	const [userinfo, setUserinfo] = useState({
-		name: 'junaid malik',
-		username: 'junaidmalik9069',
-		email: 'junaidmalik9069@gmail.com',
+		name: 'Paul Chamberlain',
+		username: 'pauljohnchamberlain',
+		email: 'pauljohnchamberlain@gmail.com',
 		role: 'creator',
 		profileImage: '',
 		bannerImage: '',
@@ -18,17 +20,17 @@ export default function Example() {
 			{
 				platform: 'instagram',
 				followers: '1000',
-				profile: 'https://www.instagram.com/junaidmalik9069/',
+				profile: 'https://www.instagram.com/pauljohnchamberlain/',
 			},
 			{
 				platform: 'youtube',
 				followers: '1000',
-				profile: 'https://www.facebook.com/junaidmalik9069/',
+				profile: 'https://www.facebook.com/pauljohnchamberlain/',
 			},
 			{
 				platform: 'facebook',
 				followers: '1000',
-				profile: 'https://www.youtube.com/@junaidmalik9069/',
+				profile: 'https://www.youtube.com/@pauljohnchamberlain/',
 			},
 		],
 		packages: [

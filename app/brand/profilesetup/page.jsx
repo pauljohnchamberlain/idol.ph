@@ -1,9 +1,10 @@
+'use client';
 import { UploadButton } from '@/utils/uploadthing';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-export default function Example() {
+export default function BrandProfileSetup() {
 	const [userInfo, setUserInfo] = useState({
 		name: '',
 		email: '',

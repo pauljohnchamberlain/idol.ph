@@ -20,7 +20,7 @@ export default async function HomePage() {
 				<div className='mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-[#7042f88b] bg-white px-7 py-2 shadow-md transition-all Welcome-box'>
 					<p className='Welcome-text text-sm font-semibold cursor-pointer'>idol is now public!</p>
 				</div>
-				<h1 className='max-w-6xl text-5xl h-14 font-bold md:text-6xl lg:text-5xl bg-gradient-to-l from-[#e73ade] to-[#f6517d] bg-clip-text text-transparent'>
+				<h1 className='max-w-6xl text-4xl font-bold md:text-5xl lg:text-6xl bg-gradient-to-l from-[#e73ade] to-[#f6517d] bg-clip-text text-transparent'>
 					Where Creators & Influencers Meet Brands.
 				</h1>
 				<p className='mt-5 max-w-prose text-zinc-400 sm: text-lg'>

@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Creator {
+    id           String   @id @default(uuid())
+    name         String
+    username     String   @unique
+    email        String   @unique
+    role         String   @default("creator")
+    phone        String?
+    profileImage String?
+    city         String?
+    state        String?
+    category     String?
+    platforms    Json[]
+    bannerImage  String?
+    achievements Json[]
+    description  String?
+    packages     Json[]
+    rating       Float    @default(0)
+    reviews      Json[]
+    sample       Json[]
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+}
+
+model Collaboration {
+    id          String   @id @default(uuid())
+    brand       String
+    creator     String
+    status      String
+    description String
+    budget      Float
+    workResult  String
+    dealDate    DateTime @default(now())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model Brand {
+    id           String   @id @default(uuid())
+    name         String
+    email        String   @unique
+    role         String   @default("brand")
+    profileImage String?
+    category     String[]
+    location     String?
+    description  String?
+    rating       Float    @default(0)
+    reviews      Json[]
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+}
+
+model Review {
+    id            String   @id @default(uuid())
+    reviewToEmail String
+    reviewToFrom  String
+    title         String
+    description   String
+    rating        Float
+    image         String
+    date          DateTime @default(now())
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+}

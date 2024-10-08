@@ -21,10 +21,10 @@ export default async function HomePage() {
 					<p className='Welcome-text text-sm font-semibold cursor-pointer'>idol is now public!</p>
 				</div>
 				<h1 className='max-w-6xl text-5xl h-14 font-bold md:text-6xl lg:text-5xl bg-gradient-to-l from-[#e73ade] to-[#f6517d] bg-clip-text text-transparent'>
-					Influencer Marketing Made Easy.
+					Where Creators & Influencers Meet Brands.
 				</h1>
 				<p className='mt-5 max-w-prose text-zinc-400 sm: text-lg'>
-					Find and hire top Instagram, YouTube and Facebook influencers to create unique content for your brand
+					Find and hire top Instagram, Tiktok, YouTube and Facebook influencers to create unique content for your brand
 				</p>
 			</MaxWidthWrapper>
 

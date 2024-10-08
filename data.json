@@ -1,0 +1,148 @@
+[
+  {
+    "name": "Sanjay Mehta",
+    "username": "sanjaym",
+    "email": "sanjay@example.com",
+    "role": "creator",
+    "phone": "98765-23456",
+    "profileImage": "profile.jpg",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "category": "science",
+    "platforms": ["YouTube", "Twitter"],
+    "bannerImages": ["banner1.jpg", "banner2.jpg"],
+    "achievments": ["Tech Guru", "500K Subscribers"],
+    "description": "I review the latest tech gadgets and provide tech tips and insights.",
+    "packages": [
+      {
+        "name": "Tech Q&A Session",
+        "price": 30,
+        "description": "Join me for a live tech Q&A session.",
+        "platform": "Instagram"
+      },
+      {
+        "name": "Tech Gadgets Guide",
+        "price": 20,
+        "description": "Get my guide to the best tech gadgets on the market.",
+        "platform": "YouTube"
+      }
+    ]
+  },
+
+  {
+    "name": "Esha Gupta",
+    "username": "eshag",
+    "email": "esha@example.com",
+    "role": "creator",
+    "phone": "98765-98765",
+    "profileImage": "profile.jpg",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "category": "lifestyle",
+    "platforms": ["Instagram", "Pinterest"],
+    "bannerImages": ["banner1.jpg", "banner2.jpg"],
+    "achievments": ["Lifestyle Guru", "1 Million Followers"],
+    "description": "I share tips and insights on living a fulfilling and balanced lifestyle.",
+    "packages": [
+      {
+        "name": "Lifestyle Consultation",
+        "price": 50,
+        "description": "Book a personalized lifestyle consultation with me.",
+        "platform": "Twitter"
+      },
+      {
+        "name": "Mindfulness Workshop",
+        "price": 40,
+        "description": "Join my mindfulness workshop for inner peace and well-being.",
+        "platform": "Instagram"
+      }
+    ]
+  },
+  {
+    "name": "Arjun Reddy",
+    "username": "arjunr",
+    "email": "arjun@example.com",
+    "role": "creator",
+    "phone": "98765-87654",
+    "profileImage": "profile.jpg",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "category": "comedy",
+    "platforms": ["YouTube", "Twitter"],
+    "bannerImages": ["banner1.jpg", "banner2.jpg"],
+    "achievments": ["Stand-up Comedy Champion", "500K Followers"],
+    "description": "I make people laugh with my stand-up comedy and funny sketches.",
+    "packages": [
+      {
+        "name": "Virtual Comedy Show",
+        "price": 20,
+        "description": "Join my virtual comedy show for a good laugh.",
+        "platform": "Facebook"
+      },
+      {
+        "name": "Personalized Joke",
+        "price": 5,
+        "description": "Get a personalized joke sent to your inbox.",
+        "platform": "YouTube"
+      }
+    ]
+  },
+  {
+    "name": "Aditi Desai",
+    "username": "aditid",
+    "email": "aditi@example.com",
+    "role": "creator",
+    "phone": "98765-76543",
+    "profileImage": "profile.jpg",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "category": "travel",
+    "platforms": ["YouTube", "Instagram"],
+    "bannerImages": ["banner1.jpg", "banner2.jpg"],
+    "achievments": ["Wanderlust Explorer", "1 Million Subscribers"],
+    "description": "I explore the world and share my travel adventures with my viewers.",
+    "packages": [
+      {
+        "name": "Travel Postcard",
+        "price": 15,
+        "description": "Receive a personalized postcard from my travels.",
+        "platform": "Instagram"
+      },
+      {
+        "name": "Exclusive Travel Guide",
+        "price": 50,
+        "description": "Get access to my exclusive travel guide with tips and recommendations.",
+        "platform": "YouTube"
+      }
+    ]
+  },
+  {
+    "name": "Anuj Garg",
+    "username": "anuj_x_grg",
+    "email": "a_garg@example.com",
+    "role": "creator",
+    "phone": "98765-76543",
+    "profileImage": "profile.jpg",
+    "city": "Chandigrah",
+    "state": "Haryana",
+    "category": "Travel",
+    "platforms": ["YouTube", "Instagram"],
+    "bannerImages": ["banner1.jpg", "banner2.jpg"],
+    "achievments": ["Wanderlust Explorer", "1 Million Subscribers"],
+    "description": "I explore the world and share my travel adventures with my viewers.",
+    "packages": [
+      {
+        "name": "Travel Postcard",
+        "price": 15,
+        "description": "Receive a personalized postcard from my travels.",
+        "platform": "Instagram"
+      },
+      {
+        "name": "Exclusive Travel Guide",
+        "price": 50,
+        "description": "Get access to my exclusive travel guide with tips and recommendations.",
+        "platform": "YouTube"
+      }
+    ]
+  }
+]

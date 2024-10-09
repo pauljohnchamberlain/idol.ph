@@ -51,7 +51,9 @@ export default function Example() {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Basic ${btoa('junaid:2002')}`,
+					Authorization: `Basic ${btoa(
+						process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
+					)}`,
 				},
 				body: JSON.stringify({ email: user.email }),
 			})
@@ -67,7 +69,9 @@ export default function Example() {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Basic ${btoa('junaid:2002')}`,
+				Authorization: `Basic ${btoa(
+					process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
+				)}`,
 			},
 			body: JSON.stringify({
 				email: email,
@@ -84,7 +88,9 @@ export default function Example() {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Basic ${btoa('junaid:2002')}`,
+				Authorization: `Basic ${btoa(
+					process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
+				)}`,
 			},
 			body: JSON.stringify({
 				email: email,
@@ -102,7 +108,9 @@ export default function Example() {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Basic ${btoa('junaid:2002')}`,
+				Authorization: `Basic ${btoa(
+					process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
+				)}`,
 			},
 			body: JSON.stringify({
 				email: userinfo.email,
@@ -123,7 +131,9 @@ export default function Example() {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Basic ${btoa('junaid:2002')}`,
+				Authorization: `Basic ${btoa(
+					process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
+				)}`,
 			},
 			body: JSON.stringify({
 				email: userinfo.email,
@@ -143,7 +153,9 @@ export default function Example() {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Basic ${btoa('junaid:2002')}`,
+				Authorization: `Basic ${btoa(
+					process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
+				)}`,
 			},
 			body: JSON.stringify({
 				email: userinfo.email,

@@ -6,6 +6,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'; // Use 'next/navigation' in the app directory
 import { ToastContainer, toast } from 'react-toastify';
+import { signIn } from 'next-auth/react';
+
+// Ensure this import is present
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function BrandSignupForm() {
@@ -27,43 +30,33 @@ export default function BrandSignupForm() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(userInfo);
-
+		console.log('Submitting form with userInfo:', userInfo);
 		try {
-			const res = await fetch('/api/auth/signup', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Basic ${btoa(
-						process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
-					)}`,
-				},
-				body: JSON.stringify(userInfo),
+			const result = await signIn('credentials', {
+				email: userInfo.email,
+				password: userInfo.password,
+				name: userInfo.name,
+				role: 'brand',
+				action: 'signup',
+				redirect: false,
 			});
 
-			const data = await res.json();
-			console.log(data);
-
-			if (data.success) {
-				toast.success(data.message, {
+			if (result.error) {
+				toast.error(result.error, {
 					position: 'top-left',
 					autoClose: 5000,
 					theme: 'light',
 				});
-
-				if (typeof window !== 'undefined') {
-					localStorage.setItem('user', JSON.stringify(data.token));
-				}
+			} else {
+				toast.success('Account created successfully!', {
+					position: 'top-left',
+					autoClose: 5000,
+					theme: 'light',
+				});
 
 				setTimeout(() => {
-					router.push('/brand');
+					router.push('/brand/profilesetup');
 				}, 1000);
-			} else {
-				toast.error(data.error, {
-					position: 'top-left',
-					autoClose: 5000,
-					theme: 'light',
-				});
 			}
 		} catch (error) {
 			console.error('An error occurred:', error);
@@ -77,7 +70,7 @@ export default function BrandSignupForm() {
 
 	return (
 		<>
-			<ToastContainer position='bottom-left' autoClose={5000} theme='light' />
+			<ToastContainer />
 			<form onSubmit={handleSubmit} className='grid grid-cols-1 gap-5 w-80 my-10 mx-auto'>
 				<input
 					onChange={handleChange}
@@ -110,7 +103,7 @@ export default function BrandSignupForm() {
 					minLength={8}
 					required
 				/>
-				<button type='submit' className='bg-black text-white p-2 rounded-lg hover:text-gray-300 hover:bg-gray-800'>
+				<button type='submit' className='bg-primary text-white p-2 rounded-lg hover:bg-secondary'>
 					Sign up
 				</button>
 			</form>
@@ -118,7 +111,7 @@ export default function BrandSignupForm() {
 				<p className='text-sm text-gray-500'>
 					Already have an account?{' '}
 					<Link href='/login'>
-						<span className='text-black cursor-pointer hover:text-gray-800'>Sign in</span>
+						<span className='text-primary cursor-pointer hover:text-gray-800'>Sign in</span>
 					</Link>
 				</p>
 			</div>

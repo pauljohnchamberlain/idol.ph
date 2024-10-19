@@ -1,24 +1,36 @@
 import { PrismaClient } from '@prisma/client';
-import { verifyAuth } from '@/utils/auth';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
 export async function POST(req) {
-	if (!verifyAuth(req)) {
-		return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+	const session = await getServerSession(authOptions);
+
+	if (!session || !session.user || !session.user.email) {
+		console.error('No session or email found');
+		return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
 	}
 
+	console.log('Session:', session);
+	console.log('User email from session:', session.user.email);
+
 	try {
-		const { email, bannerImage } = await req.json();
+		const { bannerImage } = await req.json();
+
+		if (!bannerImage) {
+			console.error('No bannerImage provided in request body');
+			return NextResponse.json({ success: false, message: 'No banner image URL provided' }, { status: 400 });
+		}
 
 		const creator = await prisma.creator.findUnique({
-			where: { email },
+			where: { email: session.user.email },
 		});
 
 		if (creator) {
 			await prisma.creator.update({
-				where: { email },
+				where: { email: session.user.email },
 				data: { bannerImage },
 			});
 			return NextResponse.json({ success: true, message: 'Banner Image Updated' });

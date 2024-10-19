@@ -23,6 +23,14 @@
 		],
 		"strictNullChecks": true
 	},
-	"include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+	"include": [
+		"next-env.d.ts",
+		".next/types/**/*.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		"app/api/uploadthing/route.js",
+		"app/api/uploadthing/core.js",
+		"utils/uploadthing.js"
+	],
 	"exclude": ["node_modules"]
 }

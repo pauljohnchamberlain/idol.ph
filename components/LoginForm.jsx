@@ -3,12 +3,16 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Use 'next/navigation' in 'app' directory
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
+
+// Ensure this import is present
 import 'react-toastify/dist/ReactToastify.css';
-import { Button } from './ui/button'; // Adjust import paths as needed
+
+import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { signIn } from 'next-auth/react';
 
 export default function LoginForm() {
 	const router = useRouter();
@@ -16,6 +20,7 @@ export default function LoginForm() {
 		email: '',
 		password: '',
 	});
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -27,66 +32,62 @@ export default function LoginForm() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		setIsLoading(true);
 		try {
-			const res = await fetch('/api/auth/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Basic ${btoa(
-						process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
-					)}`,
-				},
-				body: JSON.stringify(userInfo),
+			const result = await signIn('credentials', {
+				email: userInfo.email,
+				password: userInfo.password,
+				redirect: false,
 			});
 
-			if (!res.ok) {
-				throw new Error(`HTTP error! status: ${res.status}`);
-			}
-
-			const data = await res.json();
-
-			if (data.success) {
-				toast.success('Login Success', {
-					position: 'top-left',
+			if (result.error) {
+				toast.error(result.error, {
+					position: 'bottom-left',
 					autoClose: 5000,
 					theme: 'light',
 				});
-
-				if (typeof window !== 'undefined') {
-					localStorage.setItem(
-						'user',
-						JSON.stringify({
-							email: data.email,
-							role: data.role,
-							token: data.token,
-						})
-					);
-				}
-
-				setTimeout(() => {
-					if (data.role === 'brand') {
-						router.push('/brand');
-					} else if (data.role === 'creator') {
-						router.push('/creator');
-					} else {
-						router.push('/');
-					}
-				}, 1000);
 			} else {
-				toast.error(data.error, {
-					position: 'top-left',
-					autoClose: 5000,
+				// Show success toast
+				toast.success('Logged in successfully!', {
+					position: 'bottom-left',
+					autoClose: 3000,
 					theme: 'light',
 				});
+
+				// Fetch user data to get the role
+				const userResponse = await fetch('/api/user', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				});
+
+				if (userResponse.ok) {
+					const userData = await userResponse.json();
+					if (userData.role === 'creator') {
+						router.push('/creator/profilesetup');
+					} else if (userData.role === 'brand') {
+						router.push('/brand/profilesetup');
+					} else {
+						router.push('/dashboard');
+					}
+				} else {
+					toast.error('Failed to fetch user data', {
+						position: 'bottom-left',
+						autoClose: 5000,
+						theme: 'light',
+					});
+				}
 			}
 		} catch (error) {
 			console.error('An error occurred:', error);
 			toast.error('An unexpected error occurred. Please try again.', {
-				position: 'top-left',
+				position: 'bottom-left',
 				autoClose: 5000,
 				theme: 'light',
 			});
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -114,15 +115,24 @@ export default function LoginForm() {
 					placeholder='Password'
 				/>
 				<Link href='/forgot'>
-					<p className='text-blue-500 hover:underline'>Forgot password?</p>
+					<p className='text-primary hover:underline'>Forgot password?</p>
 				</Link>
-				<Button type='submit'>Login</Button>
+				<Button type='submit' disabled={isLoading}>
+					{isLoading ? (
+						<>
+							<span className='mr-2'>Loading...</span>
+							<span className='animate-spin'>&#8987;</span>
+						</>
+					) : (
+						'Login'
+					)}
+				</Button>
 			</form>
 			<div>
 				<p className='text-sm text-gray-500'>
 					Don't have an account?{' '}
 					<Link href='/signup'>
-						<span className='text-blue-500 hover:underline'>Sign up</span>
+						<span className='text-primary hover:underline'>Sign up</span>
 					</Link>
 				</p>
 			</div>

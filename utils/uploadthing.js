@@ -1,5 +1,5 @@
-import { UploadButton, UploadDropzone, Uploader } from '@uploadthing/react';
+import { UploadButton, UploadDropzone, Uploader, generateReactHelpers } from '@uploadthing/react';
 
-import OurFileRouter from '@/server/uploadthing';
+export const { useUploadThing, uploadFiles } = generateReactHelpers();
 
 export { UploadButton, UploadDropzone, Uploader };

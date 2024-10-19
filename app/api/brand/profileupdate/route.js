@@ -1,16 +1,18 @@
-import { PrismaClient } from '@prisma/client';
-import { verifyAuth } from '@/utils/auth'; // Assuming you have an auth utility
+import prisma from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
-
 export async function POST(req) {
-	if (!verifyAuth(req)) {
+	const session = await getServerSession(authOptions);
+
+	if (!session || !session.user || !session.user.email) {
 		return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
 	}
 
 	try {
-		const { name, email, profileImage, category, location, description } = await req.json();
+		const { name, profileImage, category, location, description } = await req.json();
+		const email = session.user.email;
 
 		const brand = await prisma.brand.upsert({
 			where: { email },

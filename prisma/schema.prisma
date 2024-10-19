@@ -16,14 +16,13 @@ datasource db {
 model Creator {
     id           String   @id @default(uuid())
     name         String
-    username     String   @unique
     email        String   @unique
     password     String
     role         String   @default("creator")
     phone        String?
     profileImage String?
     city         String?
-    state        String?
+    region       String?
     category     String?
     platforms    Json[]
     bannerImage  String?
@@ -52,12 +51,19 @@ model Collaboration {
 
 model Brand {
     id           String   @id @default(uuid())
-    name         String
+    companyName  String?
+    brn          String?
+    companyType  String?
+    website      String?
+    name         String?
     email        String   @unique
-    role         String   @default("brand")
+    password     String
+    role         String   @default("creator")
     profileImage String?
     category     String[]
-    location     String?
+    city         String?
+    region       String?
+    address      String?
     description  String?
     rating       Float    @default(0)
     reviews      Json[]

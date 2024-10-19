@@ -4,6 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import Cookies from 'js-cookie';
+import { displayName } from '@/utils/string-helpers';
 
 import MaxWidthWrapper from './MaxWidthWrapper';
 import { buttonVariants } from './ui/button';
@@ -18,29 +21,27 @@ import {
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const router = useRouter();
-
-	useEffect(() => {
-		const user = localStorage.getItem('user');
-		setIsLoggedIn(!!user);
-	}, []);
+	const [userKey, setUserKey] = useState(0);
+	const { data: session, status } = useSession();
 
 	const closeMenu = () => setIsOpen(false);
 
-	const handleLogout = () => {
-		localStorage.removeItem('user');
-		setIsLoggedIn(false);
-		router.push('/');
+	const handleLogout = async () => {
+		await signOut({ redirect: false });
+		router.push('/login');
 	};
 
 	return (
-		<nav className='sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all'>
+		<nav
+			key={userKey}
+			className='sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all'
+		>
 			<MaxWidthWrapper>
 				<div className='flex h-14 items-center justify-between border-b border-zinc-200'>
 					<Link href='/' className='flex z-40 font-semibold items-center justify-center gap-x-2 rounded-md'>
-						<Image src='/idol-logo.svg' alt='idol' width={100} height={20} />
+						<Image src='/idol-logo.svg' alt='idol' width={0} height={0} className='w-auto h-7 max-w-[120px]' />
 					</Link>
 
 					<div className='hidden items-center space-x-4 sm:flex'>
@@ -62,7 +63,7 @@ const Navbar = () => {
 						>
 							How It Works
 						</Link>
-						{isLoggedIn ? (
+						{status === 'authenticated' ? (
 							<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
 								<DropdownMenuTrigger
 									className={buttonVariants({
@@ -70,11 +71,11 @@ const Navbar = () => {
 										size: 'sm',
 									})}
 								>
-									My Account <ChevronDown className='ml-1 h-4 w-4' />
+									{displayName(session.user.name) || 'My Account'} <ChevronDown className='ml-1 h-4 w-4' />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
 									<DropdownMenuItem>
-										<Link href='/account'>Account Settings</Link>
+										<Link href={`/${session.user.role}/profilesetup`}>Profile Setup</Link>
 									</DropdownMenuItem>
 									<DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
 								</DropdownMenuContent>
@@ -140,7 +141,7 @@ const Navbar = () => {
 								>
 									How It Works
 								</Link>
-								{isLoggedIn ? (
+								{status === 'authenticated' ? (
 									<>
 										<Link
 											href='/account'
@@ -155,7 +156,7 @@ const Navbar = () => {
 										</Link>
 										<button
 											onClick={() => {
-												handleLogout();
+												signOut();
 												closeMenu();
 											}}
 											className={buttonVariants({

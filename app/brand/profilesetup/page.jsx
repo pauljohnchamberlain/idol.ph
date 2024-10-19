@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+
 export default function BrandProfileSetup() {
 	const [userInfo, setUserInfo] = useState({
 		name: '',
@@ -11,6 +12,11 @@ export default function BrandProfileSetup() {
 		password: '',
 		role: 'creator',
 		profileImage: '',
+		apartment: '',
+		officeAddress: '',
+		city: '',
+		region: '',
+		zipCode: '',
 	});
 	useEffect(() => {
 		const user = JSON.parse(localStorage.getItem('user'));
@@ -30,6 +36,15 @@ export default function BrandProfileSetup() {
 				});
 		}
 	}, []);
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setUserInfo((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
 	return (
 		<div className='min-h-screen '>
 			<div className='space-y-6 p-10'>
@@ -44,7 +59,7 @@ export default function BrandProfileSetup() {
 								<div className='flex w-full'>
 									<div className='w-1/2 flex gap-5  items-center justify-between px-20 '>
 										<Image
-											src={userInfo.profileImage}
+											src={userInfo.profileImage || '/default-profile-image.png'}
 											width={200}
 											height={200}
 											alt=''
@@ -77,7 +92,8 @@ export default function BrandProfileSetup() {
 												type='text'
 												name='name'
 												id='name'
-												autoComplete='name'
+												value={userInfo.name}
+												onChange={handleChange}
 												className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 											/>
 										</div>
@@ -88,37 +104,26 @@ export default function BrandProfileSetup() {
 											</label>
 											<Input
 												type='text'
-												name='email-address'
+												name='email'
 												id='email-address'
-												autoComplete='email'
+												value={userInfo.email}
+												onChange={handleChange}
 												className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 											/>
 										</div>
 									</div>
 								</div>
 								<div className='grid grid-cols-6 gap-6'>
-									{/* <div className="col-span-6 sm:col-span-3">
-                                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-Phone
-                                  </label>
-                                  <input
-                                      type="text"
-                                      name="phone"
-                                      id="phone"
-                                      autoComplete="email"
-                                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                  />
-                              </div> */}
-
 									<div className='col-span-6'>
 										<label htmlFor='street-address' className='block text-sm font-medium text-gray-700'>
 											Apartment, suite, etc.
 										</label>
 										<Input
 											type='text'
-											name='street-address'
-											id='street-address'
-											autoComplete='street-address'
+											name='apartment'
+											id='apartment'
+											value={userInfo.apartment}
+											onChange={handleChange}
 											className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 										/>
 									</div>
@@ -128,9 +133,10 @@ Phone
 										</label>
 										<Input
 											type='text'
-											name='street-address'
-											id='street-address'
-											autoComplete='street-address'
+											name='officeAddress'
+											id='office-address'
+											value={userInfo.officeAddress}
+											onChange={handleChange}
 											className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 										/>
 									</div>
@@ -143,73 +149,40 @@ Phone
 											type='text'
 											name='city'
 											id='city'
-											autoComplete='address-level2'
+											value={userInfo.city}
+											onChange={handleChange}
 											className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 										/>
 									</div>
 
 									<div className='col-span-6 sm:col-span-3 lg:col-span-2'>
-										<label htmlFor='state' className='block text-sm font-medium text-gray-700'>
-											State
+										<label htmlFor='region' className='block text-sm font-medium text-gray-700'>
+											Region
 										</label>
-										<div className='mt-1'>
-											<select
-												name='state'
-												id='state'
-												required
-												autoComplete='shipping address-level1'
-												className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-											>
-												<option value='AN'>Andaman and Nicobar Islands</option>
-												<option value='AP'>Andhra Pradesh</option>
-												<option value='AR'>Arunachal Pradesh</option>
-												<option value='AS'>Assam</option>
-												<option value='BR'>Bihar</option>
-												<option value='CH'>Chandigarh</option>
-												<option value='CG'>Chhattisgarh</option>
-												<option value='DN'>Dadra and Nagar Haveli</option>
-												<option value='DD'>Daman and Diu</option>
-												<option value='DL'>Delhi</option>
-												<option value='GA'>Goa</option>
-												<option value='GJ'>Gujarat</option>
-												<option value='HR'>Haryana</option>
-												<option value='HP'>Himachal Pradesh</option>
-												<option value='JK'>Jammu and Kashmir</option>
-												<option value='JH'>Jharkhand</option>
-												<option value='KA'>Karnataka</option>
-												<option value='KL'>Kerala</option>
-												<option value='LA'>Ladakh</option>
-												<option value='LD'>Lakshadweep</option>
-												<option value='MP'>Madhya Pradesh</option>
-												<option value='MH'>Maharashtra</option>
-												<option value='MN'>Manipur</option>
-												<option value='ML'>Meghalaya</option>
-												<option value='MZ'>Mizoram</option>
-												<option value='NL'>Nagaland</option>
-												<option value='OR'>Odisha</option>
-												<option value='PY'>Puducherry</option>
-												<option value='PB'>Punjab</option>
-												<option value='RJ'>Rajasthan</option>
-												<option value='SK'>Sikkim</option>
-												<option value='TN'>Tamil Nadu</option>
-												<option value='TS'>Telangana</option>
-												<option value='TR'>Tripura</option>
-												<option value='UP'>Uttar Pradesh</option>
-												<option value='UK'>Uttarakhand</option>
-												<option value='WB'>West Bengal</option>
-											</select>
-										</div>
+										<select
+											name='region'
+											id='region'
+											value={userInfo.region}
+											onChange={handleChange}
+											required
+											className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+										>
+											<option value='Metro Manila'>Metro Manila</option>
+											<option value='Cebu'>Cebu</option>
+											<option value='Davao'>Davao</option>
+										</select>
 									</div>
 
 									<div className='col-span-6 sm:col-span-3 lg:col-span-2'>
 										<label htmlFor='postal-code' className='block text-sm font-medium text-gray-700'>
-											PIN Code
+											Zip Code
 										</label>
 										<input
 											type='text'
-											name='postal-code'
-											id='postal-code'
-											autoComplete='postal-code'
+											name='zipCode'
+											id='zip-code'
+											value={userInfo.zipCode}
+											onChange={handleChange}
 											className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 										/>
 									</div>

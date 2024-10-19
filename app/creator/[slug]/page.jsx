@@ -1,16 +1,18 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import Creator from '@/model/Creator';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BiLogoInstagramAlt, BiLogoYoutube } from 'react-icons/bi';
-import { connectToDatabase } from '@/lib/mongoose';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export async function generateMetadata({ params }) {
 	const { slug } = params;
 
-	await connectToDatabase();
-	const creator = await Creator.findOne({ username: slug }).lean();
+	const creator = await prisma.creator.findUnique({
+		where: { id: slug },
+	});
 
 	if (!creator) {
 		return {
@@ -28,14 +30,15 @@ export async function generateMetadata({ params }) {
 export default async function CreatorPage({ params }) {
 	const { slug } = params;
 
-	await connectToDatabase();
-	const creator = await Creator.findOne({ username: slug }).lean();
+	const creator = await prisma.creator.findUnique({
+		where: { id: slug },
+	});
 
 	if (!creator) {
 		notFound();
 	}
 
-	const { name, profileImage, category, city, state, bannerImage, description, packages, platforms } = creator;
+	const { name, profileImage, category, city, region, bannerImage, description, packages, platforms } = creator;
 
 	return <div className='w-3/4 mx-auto flex flex-col gap-y-3'>{/* ... your JSX code ... */}</div>;
 }

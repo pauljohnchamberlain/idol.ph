@@ -1,29 +1,39 @@
-import { PrismaClient } from '@prisma/client';
-import { verifyAuth } from '@/utils/auth';
+import prisma from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
-
 export async function POST(req) {
-	if (!verifyAuth(req)) {
-		return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+	const session = await getServerSession(authOptions);
+
+	if (!session || !session.user || !session.user.email) {
+		console.error('No session or email found');
+		return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
 	}
 
-	try {
-		const { email, profileImage } = await req.json();
+	console.log('Session:', session);
+	console.log('User email from session:', session.user.email);
 
-		const creator = await prisma.creator.update({
-			where: { email },
+	try {
+		const { profileImage } = await req.json();
+
+		if (!profileImage) {
+			console.error('No profileImage provided in request body');
+			return NextResponse.json({ success: false, message: 'No profile image URL provided' }, { status: 400 });
+		}
+
+		console.log('Updating profile image for:', session.user.email);
+
+		const updatedCreator = await prisma.creator.update({
+			where: { email: session.user.email },
 			data: { profileImage },
 		});
 
-		if (creator) {
-			return NextResponse.json({ success: true, message: 'Profile Image Updated' });
-		} else {
-			return NextResponse.json({ success: false, message: 'Creator not found' }, { status: 400 });
-		}
+		console.log('Updated creator:', updatedCreator);
+
+		return NextResponse.json({ success: true, message: 'Profile Image Updated' });
 	} catch (err) {
-		console.error(err);
-		return NextResponse.json({ success: false, message: 'Server error' }, { status: 500 });
+		console.error('Error updating profile image:', err);
+		return NextResponse.json({ success: false, message: 'Server error', error: err.message }, { status: 500 });
 	}
 }

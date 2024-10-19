@@ -1,19 +1,22 @@
 import { PrismaClient } from '@prisma/client';
-import { verifyAuth } from '@/utils/auth'; // Assuming you have an auth utility
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
 export async function POST(req) {
-	if (!verifyAuth(req)) {
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
 		return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
 	}
 
 	try {
-		const { email, category, description, platforms } = await req.json();
+		const { category, description, platforms } = await req.json();
 
 		const updatedCreator = await prisma.creator.update({
-			where: { email },
+			where: { email: session.user.email },
 			data: { category, description, platforms },
 		});
 

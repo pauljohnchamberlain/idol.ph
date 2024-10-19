@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // Use 'next/navigation' in the app directory
+import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
+import { signIn } from 'next-auth/react';
+
+// Add this line if not already present
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function SignupForm() {
+export default function CreatorSignupForm() {
 	const router = useRouter();
 	const [userInfo, setUserInfo] = useState({
 		name: '',
@@ -26,66 +29,34 @@ export default function SignupForm() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(userInfo);
-
+		console.log('Submitting form with userInfo:', userInfo);
 		try {
-			// Sign up the user
-			const res = await fetch('/api/auth/signup', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Basic ${btoa(
-						process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
-					)}`,
-				},
-				body: JSON.stringify(userInfo),
+			const result = await signIn('credentials', {
+				email: userInfo.email,
+				password: userInfo.password,
+				name: userInfo.name,
+				role: 'creator',
+				username: userInfo.username,
+				action: 'signup',
+				redirect: false,
 			});
 
-			const data = await res.json();
-			console.log(data);
-
-			if (data.success) {
-				// Update the user's profile
-				const resProfileUpdate = await fetch('/api/creator/profileupdate', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Basic ${btoa(
-							process.env.NEXT_PUBLIC_API_USERNAME + ':' + process.env.NEXT_PUBLIC_API_PASSWORD
-						)}`,
-					},
-					body: JSON.stringify(userInfo),
-				});
-
-				const profileData = await resProfileUpdate.json();
-
-				if (profileData.success) {
-					toast.success(profileData.message, {
-						position: 'top-left',
-						autoClose: 5000,
-						theme: 'light',
-					});
-
-					if (typeof window !== 'undefined') {
-						localStorage.setItem('user', JSON.stringify(data));
-					}
-
-					setTimeout(() => {
-						router.push('/creator/profilesetup');
-					}, 1000);
-				} else {
-					toast.error(profileData.error, {
-						position: 'top-left',
-						autoClose: 5000,
-						theme: 'light',
-					});
-				}
-			} else {
-				toast.error(data.error, {
+			if (result.error) {
+				toast.error(result.error, {
 					position: 'top-left',
 					autoClose: 5000,
 					theme: 'light',
 				});
+			} else {
+				toast.success('Account created successfully!', {
+					position: 'top-left',
+					autoClose: 5000,
+					theme: 'light',
+				});
+
+				setTimeout(() => {
+					router.push('/creator/profilesetup');
+				}, 1000);
 			}
 		} catch (error) {
 			console.error('An error occurred:', error);
@@ -99,18 +70,8 @@ export default function SignupForm() {
 
 	return (
 		<>
-			<ToastContainer position='bottom-left' autoClose={5000} theme='light' />
+			<ToastContainer />
 			<form onSubmit={handleSubmit} className='grid grid-cols-1 gap-5 w-80 my-10 mx-auto'>
-				<input
-					onChange={handleChange}
-					id='username'
-					name='username'
-					type='text'
-					value={userInfo.username}
-					className='border-2 border-gray-300 p-2 rounded-lg'
-					placeholder='Username'
-					required
-				/>
 				<input
 					onChange={handleChange}
 					id='name'
@@ -142,7 +103,7 @@ export default function SignupForm() {
 					minLength={6}
 					required
 				/>
-				<button type='submit' className='bg-black text-white p-2 rounded-lg hover:text-gray-300 hover:bg-gray-800'>
+				<button type='submit' className='bg-primary text-white p-2 rounded-lg hover:bg-secondary'>
 					Sign up
 				</button>
 			</form>
@@ -150,7 +111,7 @@ export default function SignupForm() {
 				<p className='text-sm text-gray-500'>
 					Already have an account?{' '}
 					<Link href='/login'>
-						<span className='text-black cursor-pointer hover:text-gray-800'>Sign in</span>
+						<span className='text-primary cursor-pointer hover:text-gray-800'>Sign in</span>
 					</Link>
 				</p>
 			</div>

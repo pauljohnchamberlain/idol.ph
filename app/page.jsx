@@ -1,19 +1,27 @@
-// app/page.jsx
-
 import MaxWidthWrapper from '../components/MaxWidthWrapper';
 import HowItWorks from '../components/home/HowItWorks';
 import HomeCard from '../components/home/HomeCard';
+import SellingPoints from '../components/home/SellingPoints';
+import JobsBoard from '../components/home/JobsBoard';
+import MediaKit from '../components/home/MediaKit';
+import CollabHub from '../components/home/CollabHub';
+import PitchLikeAPro from '../components/home/PitchLikeAPro';
+import Faqs from '../components/home/Faqs';
 import Link from 'next/link';
-import { connectToDatabase } from '../lib/mongoose'; // We'll create this utility function
-import Creator from '../model/Creator';
 
-export default async function HomePage() {
-	// Connect to MongoDB
-	await connectToDatabase();
+const creators = [
+	{
+		_id: '1',
+		username: 'creator1',
+		profileImage: '/sample-profile-image.jpeg',
+		platforms: [{ platform: 'Instagram' }, { platform: 'YouTube' }],
+		packages: [{ price: 100 }],
+		category: 'Lifestyle',
+	},
+	// Add more static creator data as needed
+];
 
-	// Fetch data
-	let creators = await Creator.find({}).lean();
-
+export default function HomePage() {
 	return (
 		<>
 			<MaxWidthWrapper className='mb-12 mt-20 sm:mt-40 flex flex-col items-center justify-center text-center'>
@@ -92,6 +100,12 @@ export default async function HomePage() {
 							</div>
 							<HowItWorks />
 							{/* <Faq /> */}
+							<SellingPoints />
+							<JobsBoard />
+							<MediaKit />
+							<CollabHub />
+							<PitchLikeAPro />
+							<Faqs />
 						</div>
 					</div>
 				</div>

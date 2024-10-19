@@ -78,7 +78,7 @@ Join us in revolutionizing the influencer marketing landscape by creating meanin
 - *Next.js 14 (App Router)*and React
 - **GitHub**
 - **Vercel**
-- **MongoDB**
+- **PostgresSQL**
 - **UploadThing & AWS S3** (for image uploads)
 - **Shadcn-UI**
 - **Tailwind CSS**

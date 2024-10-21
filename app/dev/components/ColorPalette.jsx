@@ -1,4 +1,4 @@
-export function ColorPalette() {
+export function ColorPalette({ isDark = false }) {
 	const colors = [
 		{ name: 'background', variable: '--background' },
 		{ name: 'foreground', variable: '--foreground' },
@@ -29,8 +29,8 @@ export function ColorPalette() {
 						className='w-20 h-20 rounded-full shadow-md'
 						style={{ backgroundColor: `hsl(var(${color.variable}))` }}
 					></div>
-					<p className='mt-2 text-sm font-medium'>{color.name}</p>
-					<p className='text-xs text-gray-500'>{`var(${color.variable})`}</p>
+					<p className={`mt-2 text-sm font-medium ${isDark ? 'text-white' : ''}`}>{color.name}</p>
+					<p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{`var(${color.variable})`}</p>
 				</div>
 			))}
 		</div>

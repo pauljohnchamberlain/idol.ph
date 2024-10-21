@@ -9,7 +9,7 @@ export default function JobsBoard() {
 		<div className='bg-blue-50 rounded-xl p-8 flex flex-col md:flex-row gap-8'>
 			<div className='flex-1 space-y-6'>
 				<div>
-					<h3 className='text-sm font-bold tracking-wider text-blue-600'>JOBS BOARD</h3>
+					<h3 className='text-sm font-bold tracking-wider text-secondary'>JOBS BOARD</h3>
 					<h2 className='text-3xl font-bold mt-2'>Book Collabs. No commission fee.</h2>
 				</div>
 				<p className='text-gray-600'>
@@ -17,9 +17,7 @@ export default function JobsBoard() {
 					commissions, the Jobs Board is your go-to hub for discovering and securing collaborations to boost your
 					career.
 				</p>
-				<Button variant='outline' className='rounded-full'>
-					LEARN MORE
-				</Button>
+				<Button variant='outline'>LEARN MORE</Button>
 			</div>
 			<div className='flex-1 space-y-6'>
 				<div className='relative'>
@@ -46,12 +44,9 @@ export default function JobsBoard() {
 							</Badge>
 						</div>
 						<p className='text-sm'>Looking for influencers to promote our cruelty free skincare product</p>
-						<Button className='w-full bg-yellow-400 hover:bg-yellow-500 text-black'>APPLY</Button>
+						<Button className='w-full bg-secondary hover:bg-secondary hover:opacity-90 text-black'>APPLY</Button>
 					</CardContent>
 				</Card>
-			</div>
-			<div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none'>
-				<div className='w-40 h-40 border-4 border-dotted border-gray-300 rounded-full'></div>
 			</div>
 		</div>
 	);

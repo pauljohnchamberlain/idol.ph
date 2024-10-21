@@ -85,8 +85,6 @@ export default function Component() {
 					</div>
 				</CardContent>
 			</Card>
-			<div className='absolute top-0 right-0 w-32 h-32 bg-blue-200 rounded-full -mt-16 -mr-16 opacity-50' />
-			<div className='absolute bottom-0 left-0 w-32 h-32 bg-blue-200 rounded-full -mb-16 -ml-16 opacity-50' />
 		</div>
 	);
 }

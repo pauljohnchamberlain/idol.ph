@@ -2,11 +2,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, ChevronDown } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { Menu, ChevronDown, Settings, Star, FileText, LogOut, MessageSquare, User } from 'lucide-react';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import Cookies from 'js-cookie';
-import { displayName } from '@/utils/string-helpers';
+import { displayName, getInitials } from '@/utils/string-helpers';
 
 import MaxWidthWrapper from './MaxWidthWrapper';
 import { buttonVariants } from './ui/button';
@@ -25,6 +24,7 @@ function Navbar() {
 	const router = useRouter();
 	const [userKey, setUserKey] = useState(0);
 	const { data: session, status } = useSession();
+	const pathname = usePathname();
 
 	function closeMenu() {
 		setIsOpen(false);
@@ -42,6 +42,15 @@ function Navbar() {
 		return '/account'; // Fallback URL if role is not available
 	}
 
+	function getDashboardUrl() {
+		if (session && session.user) {
+			return `/${session.user.role}/dashboard`;
+		}
+		return '/dashboard'; // Fallback URL if role is not available
+	}
+
+	const showDashboardLink = status === 'authenticated' && !pathname.includes('/dashboard');
+
 	return (
 		<nav
 			key={userKey}
@@ -54,24 +63,74 @@ function Navbar() {
 					</Link>
 
 					<div className='hidden items-center space-x-4 sm:flex'>
-						<Link
-							href='/explore'
-							className={buttonVariants({
-								variant: 'ghost',
-								size: 'sm',
-							})}
-						>
-							Explore
-						</Link>
-						<Link
-							href='/#howitworks'
-							className={buttonVariants({
-								variant: 'ghost',
-								size: 'sm',
-							})}
-						>
-							How It Works
-						</Link>
+						{showDashboardLink && (
+							<Link
+								href={getDashboardUrl()}
+								className={buttonVariants({
+									variant: 'ghost',
+									size: 'sm',
+								})}
+							>
+								Dashboard
+							</Link>
+						)}
+						{session?.user?.role === 'creator' && (
+							<>
+								<Link
+									href='/creator/collab-hub'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+									})}
+								>
+									Collab Hub
+								</Link>
+								<Link
+									href='/creator/campaigns'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+									})}
+								>
+									Campaigns
+								</Link>
+								<Link
+									href='#'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+									})}
+								>
+									Creator Tools
+								</Link>
+							</>
+						)}
+						{status !== 'authenticated' ? (
+							<>
+								<Link
+									href='/explore'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+										className: 'w-full justify-start',
+									})}
+									onClick={closeMenu}
+								>
+									Explore
+								</Link>
+								<Link
+									href='/#howitworks'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+										className: 'w-full justify-start',
+									})}
+									onClick={closeMenu}
+								>
+									How It Works
+								</Link>
+							</>
+						) : null}
 						{status === 'authenticated' ? (
 							<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
 								<DropdownMenuTrigger
@@ -83,13 +142,74 @@ function Navbar() {
 									{displayName(session.user.name) || 'My Account'} <ChevronDown className='ml-1 h-4 w-4' />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
+									<div className='flex items-center space-x-2 p-2'>
+										<div className='w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold'>
+											{session.user.name ? getInitials(session.user.name) : 'U'}
+										</div>
+										<span className='font-medium'>{session.user.name}</span>
+									</div>
+									{showDashboardLink && (
+										<DropdownMenuItem>
+											<Link href={getDashboardUrl()} className='flex items-center'>
+												<User className='mr-2 h-4 w-4' />
+												Dashboard
+											</Link>
+										</DropdownMenuItem>
+									)}
+									{session.user.role === 'brand' && (
+										<>
+											<DropdownMenuItem>
+												<Link href='/brand/go-plus' className='flex items-center'>
+													<Star className='mr-2 h-4 w-4' />
+													Go Plus
+												</Link>
+											</DropdownMenuItem>
+											<DropdownMenuItem>
+												<Link href='/brand/reviews' className='flex items-center'>
+													<MessageSquare className='mr-2 h-4 w-4' />
+													Reviews
+												</Link>
+											</DropdownMenuItem>
+											<DropdownMenuItem>
+												<Link href='/brand/invoices' className='flex items-center'>
+													<FileText className='mr-2 h-4 w-4' />
+													Invoices
+												</Link>
+											</DropdownMenuItem>
+										</>
+									)}
+									{session.user.role === 'creator' && (
+										<>
+											<DropdownMenuItem>
+												<Link href='/creator/profile' className='flex items-center'>
+													<User className='mr-2 h-4 w-4' />
+													View Profile
+												</Link>
+											</DropdownMenuItem>
+											<DropdownMenuItem>
+												<Link href='/creator/media-kit' className='flex items-center'>
+													<Image className='mr-2 h-4 w-4' />
+													Media Kit
+												</Link>
+											</DropdownMenuItem>
+										</>
+									)}
 									<DropdownMenuItem>
-										<Link href={getAccountSettingsUrl()}>Account Settings</Link>
+										<Link href={getAccountSettingsUrl()} className='flex items-center'>
+											<Settings className='mr-2 h-4 w-4' />
+											Settings
+										</Link>
 									</DropdownMenuItem>
 									<DropdownMenuItem>
-										<Link href={`/${session.user.role}/profilesetup`}>Profile Setup</Link>
+										<Link href='/feedback' className='flex items-center'>
+											<MessageSquare className='mr-2 h-4 w-4' />
+											Send Feedback
+										</Link>
 									</DropdownMenuItem>
-									<DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+									<DropdownMenuItem onClick={handleLogout}>
+										<LogOut className='mr-2 h-4 w-4' />
+										Logout
+									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
 						) : (
@@ -131,28 +251,45 @@ function Navbar() {
 						</SheetTrigger>
 						<SheetContent side='right'>
 							<div className='flex flex-col space-y-4 mt-4'>
-								<Link
-									href='/explore'
-									className={buttonVariants({
-										variant: 'ghost',
-										size: 'sm',
-										className: 'w-full justify-start',
-									})}
-									onClick={closeMenu}
-								>
-									Explore
-								</Link>
-								<Link
-									href='/#howitworks'
-									className={buttonVariants({
-										variant: 'ghost',
-										size: 'sm',
-										className: 'w-full justify-start',
-									})}
-									onClick={closeMenu}
-								>
-									How It Works
-								</Link>
+								{showDashboardLink && (
+									<Link
+										href={getDashboardUrl()}
+										className={buttonVariants({
+											variant: 'ghost',
+											size: 'sm',
+											className: 'w-full justify-start',
+										})}
+										onClick={closeMenu}
+									>
+										Dashboard
+									</Link>
+								)}
+								{status !== 'authenticated' ? (
+									<>
+										<Link
+											href='/explore'
+											className={buttonVariants({
+												variant: 'ghost',
+												size: 'sm',
+												className: 'w-full justify-start',
+											})}
+											onClick={closeMenu}
+										>
+											Explore
+										</Link>
+										<Link
+											href='/#howitworks'
+											className={buttonVariants({
+												variant: 'ghost',
+												size: 'sm',
+												className: 'w-full justify-start',
+											})}
+											onClick={closeMenu}
+										>
+											How It Works
+										</Link>
+									</>
+								) : null}
 								{status === 'authenticated' ? (
 									<>
 										<Link

@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 export async function middleware(request) {
+	console.log('🚀 MIDDLEWARE EXECUTED 🚀 Path:', request.nextUrl.pathname);
+
 	const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+	console.log('🔑 Token retrieved:', token ? 'Yes' : 'No');
+
 	const isAuth = !!token;
 	const { pathname } = request.nextUrl;
 
@@ -11,7 +15,7 @@ export async function middleware(request) {
 	const isBrandRoute = pathname.startsWith('/brand');
 	const isAdminRoute = pathname.startsWith('/admin');
 
-	console.log('Token in middleware:', token);
+	console.log('Route checks:', { isAuthPage, isCreatorRoute, isBrandRoute, isAdminRoute });
 
 	if (isAuthPage) {
 		if (isAuth) {
@@ -40,6 +44,7 @@ export async function middleware(request) {
 		}
 	}
 
+	console.log('✅ MIDDLEWARE COMPLETED ✅');
 	return NextResponse.next();
 }
 
@@ -57,11 +62,5 @@ function redirectBasedOnRole(role, baseUrl) {
 }
 
 export const config = {
-	matcher: [
-		'/login',
-		'/creator/:path*',
-		'/brand/:path*',
-		'/admin/:path*',
-		'/dashboard/:path*', // If you have a common dashboard route
-	],
+	matcher: ['/login', '/creator/:path*', '/brand/:path*', '/admin/:path*'],
 };

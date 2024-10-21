@@ -47,14 +47,6 @@ const nextConfig = {
 			// "yt3.googleusercontent.com",
 		],
 	},
-	webpack: (config, { dev }) => {
-		if (dev) {
-			config.devtool = false; // Disable source maps in development
-		}
-		// Ignore source map warnings
-		config.ignoreWarnings = [{ message: /Failed to parse source map/ }];
-		return config;
-	},
 };
 
 module.exports = nextConfig;

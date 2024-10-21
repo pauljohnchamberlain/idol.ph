@@ -19,19 +19,28 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const Navbar = () => {
+function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const router = useRouter();
 	const [userKey, setUserKey] = useState(0);
 	const { data: session, status } = useSession();
 
-	const closeMenu = () => setIsOpen(false);
+	function closeMenu() {
+		setIsOpen(false);
+	}
 
-	const handleLogout = async () => {
+	async function handleLogout() {
 		await signOut({ redirect: false });
 		router.push('/login');
-	};
+	}
+
+	function getAccountSettingsUrl() {
+		if (session && session.user) {
+			return `/${session.user.role}/account`;
+		}
+		return '/account'; // Fallback URL if role is not available
+	}
 
 	return (
 		<nav
@@ -74,6 +83,9 @@ const Navbar = () => {
 									{displayName(session.user.name) || 'My Account'} <ChevronDown className='ml-1 h-4 w-4' />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
+									<DropdownMenuItem>
+										<Link href={getAccountSettingsUrl()}>Account Settings</Link>
+									</DropdownMenuItem>
 									<DropdownMenuItem>
 										<Link href={`/${session.user.role}/profilesetup`}>Profile Setup</Link>
 									</DropdownMenuItem>
@@ -144,7 +156,7 @@ const Navbar = () => {
 								{status === 'authenticated' ? (
 									<>
 										<Link
-											href='/account'
+											href={getAccountSettingsUrl()}
 											className={buttonVariants({
 												variant: 'ghost',
 												size: 'sm',
@@ -212,6 +224,6 @@ const Navbar = () => {
 			</MaxWidthWrapper>
 		</nav>
 	);
-};
+}
 
 export default Navbar;

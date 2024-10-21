@@ -18,6 +18,7 @@ export default function CreatorSignupForm() {
 		role: 'creator',
 		username: '',
 	});
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -29,14 +30,13 @@ export default function CreatorSignupForm() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log('Submitting form with userInfo:', userInfo);
+		setIsLoading(true);
 		try {
 			const result = await signIn('credentials', {
 				email: userInfo.email,
 				password: userInfo.password,
 				name: userInfo.name,
 				role: 'creator',
-				username: userInfo.username,
 				action: 'signup',
 				redirect: false,
 			});
@@ -65,6 +65,8 @@ export default function CreatorSignupForm() {
 				autoClose: 5000,
 				theme: 'light',
 			});
+		} finally {
+			setIsLoading(false);
 		}
 	};
 

@@ -16,7 +16,8 @@ Key Principles
 - Always add loading and error states to data fetching components
 - Implement error handling and error logging
 - Use semantic HTML elements where possible
-- Always write correct, best practice, DRY principle (Dont Repeat Yourself), bug free, fully functional and working code also it should be aligned to listed rules down below at Code Implementation Guidelines .
+- Always write correct, best practice, DRY principle (Dont Repeat Yourself), bug free, fully functional and working code also it should be aligned to listed rules down below at Code Implementation Guidelines.
+- Never use 'use client' in pages.
 
 Naming Conventions
 

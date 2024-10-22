@@ -17,6 +17,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -81,28 +82,56 @@ function Navbar() {
 									className={buttonVariants({
 										variant: 'ghost',
 										size: 'sm',
+										className: 'w-full justify-center',
 									})}
+									onClick={closeMenu}
 								>
 									Collab Hub
 								</Link>
-								<Link
-									href='/creator/campaigns'
-									className={buttonVariants({
-										variant: 'ghost',
-										size: 'sm',
-									})}
-								>
-									Campaigns
-								</Link>
-								<Link
-									href='#'
-									className={buttonVariants({
-										variant: 'ghost',
-										size: 'sm',
-									})}
-								>
-									Creator Tools
-								</Link>
+								<DropdownMenu>
+									<DropdownMenuTrigger
+										className={buttonVariants({
+											variant: 'ghost',
+											size: 'sm',
+										})}
+									>
+										Campaigns <ChevronDown className='ml-1 h-4 w-4' />
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuItem>
+											<Link href='/creator/campaigns' className='flex items-center w-full'>
+												Campaign Feed
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											<Link href='/creator/campaigns/applications' className='flex items-center w-full'>
+												Applications
+											</Link>
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
+								<DropdownMenu>
+									<DropdownMenuTrigger
+										className={buttonVariants({
+											variant: 'ghost',
+											size: 'sm',
+										})}
+									>
+										Creator Tools <ChevronDown className='ml-1 h-4 w-4' />
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuItem>
+											<Link href='/creator/media-kit' className='flex items-center w-full'>
+												Media Kit
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											<Link href='/creator/packages' className='flex items-center w-full'>
+												Packages
+											</Link>
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
 							</>
 						)}
 						{status !== 'authenticated' ? (
@@ -186,12 +215,6 @@ function Navbar() {
 													View Profile
 												</Link>
 											</DropdownMenuItem>
-											<DropdownMenuItem>
-												<Link href='/creator/media-kit' className='flex items-center'>
-													<Image className='mr-2 h-4 w-4' />
-													Media Kit
-												</Link>
-											</DropdownMenuItem>
 										</>
 									)}
 									<DropdownMenuItem>
@@ -250,19 +273,106 @@ function Navbar() {
 							<Menu className='h-6 w-6' />
 						</SheetTrigger>
 						<SheetContent side='right'>
-							<div className='flex flex-col space-y-4 mt-4'>
+							<div className='flex flex-col space-y-2 mt-4'>
 								{showDashboardLink && (
 									<Link
 										href={getDashboardUrl()}
 										className={buttonVariants({
 											variant: 'ghost',
 											size: 'sm',
-											className: 'w-full justify-start',
+											className: 'w-full justify-center',
 										})}
 										onClick={closeMenu}
 									>
 										Dashboard
 									</Link>
+								)}
+								{session?.user?.role === 'creator' && (
+									<>
+										<Link
+											href='/creator/collab-hub'
+											className={buttonVariants({
+												variant: 'ghost',
+												size: 'sm',
+												className: 'w-full justify-center',
+											})}
+											onClick={closeMenu}
+										>
+											Collab Hub
+										</Link>
+										<Accordion type='single' collapsible className='w-full space-y-2'>
+											<AccordionItem value='campaigns' className='border-none'>
+												<AccordionTrigger
+													className={buttonVariants({
+														variant: 'ghost',
+														size: 'sm',
+														className: 'w-full justify-center',
+													})}
+												>
+													Campaigns
+												</AccordionTrigger>
+												<AccordionContent className='space-y-2 pt-2'>
+													<Link
+														href='/creator/campaigns'
+														className={buttonVariants({
+															variant: 'ghost',
+															size: 'sm',
+															className: 'w-full justify-center',
+														})}
+														onClick={closeMenu}
+													>
+														Campaign Feed
+													</Link>
+													<Link
+														href='/creator/campaigns/applications'
+														className={buttonVariants({
+															variant: 'ghost',
+															size: 'sm',
+															className: 'w-full justify-center',
+														})}
+														onClick={closeMenu}
+													>
+														Applications
+													</Link>
+												</AccordionContent>
+											</AccordionItem>
+											<AccordionItem value='creator-tools' className='border-none'>
+												<AccordionTrigger
+													className={buttonVariants({
+														variant: 'ghost',
+														size: 'sm',
+														className: 'w-full justify-center',
+													})}
+												>
+													Creator Tools
+												</AccordionTrigger>
+												<AccordionContent className='space-y-2 pt-2'>
+													<Link
+														href='/creator/media-kit'
+														className={buttonVariants({
+															variant: 'ghost',
+															size: 'sm',
+															className: 'w-full justify-center',
+														})}
+														onClick={closeMenu}
+													>
+														Media Kit
+													</Link>
+													<Link
+														href='/creator/packages'
+														className={buttonVariants({
+															variant: 'ghost',
+															size: 'sm',
+															className: 'w-full justify-center',
+														})}
+														onClick={closeMenu}
+													>
+														Packages
+													</Link>
+												</AccordionContent>
+											</AccordionItem>
+										</Accordion>
+									</>
 								)}
 								{status !== 'authenticated' ? (
 									<>
@@ -271,7 +381,7 @@ function Navbar() {
 											className={buttonVariants({
 												variant: 'ghost',
 												size: 'sm',
-												className: 'w-full justify-start',
+												className: 'w-full justify-center',
 											})}
 											onClick={closeMenu}
 										>
@@ -282,7 +392,7 @@ function Navbar() {
 											className={buttonVariants({
 												variant: 'ghost',
 												size: 'sm',
-												className: 'w-full justify-start',
+												className: 'w-full justify-center',
 											})}
 											onClick={closeMenu}
 										>
@@ -291,32 +401,119 @@ function Navbar() {
 									</>
 								) : null}
 								{status === 'authenticated' ? (
-									<>
-										<Link
-											href={getAccountSettingsUrl()}
-											className={buttonVariants({
-												variant: 'ghost',
-												size: 'sm',
-												className: 'w-full justify-start',
-											})}
-											onClick={closeMenu}
-										>
-											Account Settings
-										</Link>
-										<button
-											onClick={() => {
-												signOut();
-												closeMenu();
-											}}
-											className={buttonVariants({
-												variant: 'ghost',
-												size: 'sm',
-												className: 'w-full justify-start',
-											})}
-										>
-											Logout
-										</button>
-									</>
+									<Accordion type='single' collapsible className='w-full'>
+										<AccordionItem value='account'>
+											<AccordionTrigger
+												className={buttonVariants({
+													variant: 'ghost',
+													size: 'sm',
+													className: 'w-full justify-center',
+												})}
+											>
+												{displayName(session.user.name) || 'My Account'}
+											</AccordionTrigger>
+											<AccordionContent>
+												{showDashboardLink && (
+													<Link
+														href={getDashboardUrl()}
+														className={buttonVariants({
+															variant: 'ghost',
+															size: 'sm',
+															className: 'w-full justify-center',
+														})}
+														onClick={closeMenu}
+													>
+														Dashboard
+													</Link>
+												)}
+												{session.user.role === 'brand' && (
+													<>
+														<Link
+															href='/brand/go-plus'
+															className={buttonVariants({
+																variant: 'ghost',
+																size: 'sm',
+																className: 'w-full justify-center',
+															})}
+															onClick={closeMenu}
+														>
+															Go Plus
+														</Link>
+														<Link
+															href='/brand/reviews'
+															className={buttonVariants({
+																variant: 'ghost',
+																size: 'sm',
+																className: 'w-full justify-center',
+															})}
+															onClick={closeMenu}
+														>
+															Reviews
+														</Link>
+														<Link
+															href='/brand/invoices'
+															className={buttonVariants({
+																variant: 'ghost',
+																size: 'sm',
+																className: 'w-full justify-center',
+															})}
+															onClick={closeMenu}
+														>
+															Invoices
+														</Link>
+													</>
+												)}
+												{session.user.role === 'creator' && (
+													<Link
+														href='/creator/profile'
+														className={buttonVariants({
+															variant: 'ghost',
+															size: 'sm',
+															className: 'w-full justify-center',
+														})}
+														onClick={closeMenu}
+													>
+														View Profile
+													</Link>
+												)}
+												<Link
+													href={getAccountSettingsUrl()}
+													className={buttonVariants({
+														variant: 'ghost',
+														size: 'sm',
+														className: 'w-full justify-center',
+													})}
+													onClick={closeMenu}
+												>
+													Settings
+												</Link>
+												<Link
+													href='/feedback'
+													className={buttonVariants({
+														variant: 'ghost',
+														size: 'sm',
+														className: 'w-full justify-center',
+													})}
+													onClick={closeMenu}
+												>
+													Send Feedback
+												</Link>
+												<button
+													onClick={() => {
+														handleLogout();
+														closeMenu();
+													}}
+													className={buttonVariants({
+														variant: 'ghost',
+														size: 'sm',
+														className: 'w-full justify-center',
+													})}
+												>
+													Logout
+												</button>
+											</AccordionContent>
+										</AccordionItem>
+									</Accordion>
 								) : (
 									<>
 										<Link
@@ -324,7 +521,7 @@ function Navbar() {
 											className={buttonVariants({
 												variant: 'ghost',
 												size: 'sm',
-												className: 'w-full justify-start',
+												className: 'w-full justify-center',
 											})}
 											onClick={closeMenu}
 										>
@@ -335,7 +532,7 @@ function Navbar() {
 											className={buttonVariants({
 												variant: 'ghost',
 												size: 'sm',
-												className: 'w-full justify-start',
+												className: 'w-full justify-center',
 											})}
 											onClick={closeMenu}
 										>
@@ -346,7 +543,7 @@ function Navbar() {
 											className={buttonVariants({
 												variant: 'ghost',
 												size: 'sm',
-												className: 'w-full justify-start',
+												className: 'w-full justify-center',
 											})}
 											onClick={closeMenu}
 										>

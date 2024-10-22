@@ -73,10 +73,10 @@ export default function CombinedSignupForm() {
 	return (
 		<>
 			<ToastContainer />
-			<form onSubmit={handleSubmit} className='grid grid-cols-1 gap-5 w-1/3 my-10 mx-auto'>
-				<div className='flex gap-4'>
+			<form onSubmit={handleSubmit} className='grid grid-cols-1 gap-5 w-full max-w-md mx-auto my-10 px-4'>
+				<div className='flex flex-col sm:flex-row gap-4'>
 					<div
-						className={`flex-1 p-4 border-2 rounded-lg cursor-pointer ${
+						className={`flex-1 p-4 border-2 rounded-lg cursor-pointer mb-4 sm:mb-0 ${
 							userType === 'creator' ? 'border-primary bg-primary/10' : 'border-gray-300'
 						}`}
 						onClick={() => setUserType('creator')}
@@ -126,7 +126,7 @@ export default function CombinedSignupForm() {
 					name='name'
 					type='text'
 					value={userInfo.name}
-					className='border-2 border-gray-300 p-2 rounded-lg focus:ring-primary focus:ring-2 focus:border-0'
+					className='w-full border-2 border-gray-300 p-2 rounded-lg focus:ring-primary focus:ring-2 focus:border-0'
 					placeholder='Full Name'
 					required
 				/>
@@ -136,7 +136,7 @@ export default function CombinedSignupForm() {
 					name='email'
 					type='email'
 					value={userInfo.email}
-					className='border-2 border-gray-300 p-2 rounded-lg focus:ring-primary focus:ring-2 focus:border-0'
+					className='w-full border-2 border-gray-300 p-2 rounded-lg focus:ring-primary focus:ring-2 focus:border-0'
 					placeholder='Email address'
 					required
 				/>
@@ -146,19 +146,19 @@ export default function CombinedSignupForm() {
 					name='password'
 					type='password'
 					value={userInfo.password}
-					className='border-2 border-gray-300 p-2 rounded-lg focus:ring-primary focus:ring-2 focus:border-0'
+					className='w-full border-2 border-gray-300 p-2 rounded-lg focus:ring-primary focus:ring-2 focus:border-0'
 					placeholder='Password'
 					minLength={6}
 					required
 				/>
-				<button type='submit' className='bg-primary text-white p-2 rounded-lg hover:bg-secondary'>
+				<button type='submit' className='w-full bg-primary text-white p-2 rounded-lg hover:bg-secondary'>
 					Create Account
 				</button>
-				<p className='text-sm text-gray-500'>
+				<p className='text-sm text-gray-500 text-center mt-4'>
 					By registering you confirm that you accept the Terms and Conditions and Privacy Policy
 				</p>
 			</form>
-			<div>
+			<div className='text-center mt-4'>
 				<p className='text-sm text-gray-500'>
 					Already have an account?{' '}
 					<Link href='/login'>

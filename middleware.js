@@ -15,7 +15,28 @@ export async function middleware(request) {
 	const isBrandRoute = pathname.startsWith('/brand');
 	const isAdminRoute = pathname.startsWith('/admin');
 
-	console.log('Route checks:', { isAuthPage, isCreatorRoute, isBrandRoute, isAdminRoute });
+	// Exclude signup routes from protection
+	const isCreatorSignup = pathname === '/creator/signup';
+	const isBrandSignup = pathname === '/brand/signup';
+
+	console.log('Route checks:', {
+		isAuthPage,
+		isCreatorRoute,
+		isBrandRoute,
+		isAdminRoute,
+		isCreatorSignup,
+		isBrandSignup,
+	});
+
+	// Handle signup routes
+	if (isCreatorSignup || isBrandSignup) {
+		if (isAuth) {
+			console.log('Redirecting authenticated user from signup to dashboard');
+			return redirectBasedOnRole(token.role, request.url);
+		}
+		console.log('Allowing access to signup route for unauthenticated user');
+		return NextResponse.next();
+	}
 
 	if (isAuthPage) {
 		if (isAuth) {
@@ -25,6 +46,7 @@ export async function middleware(request) {
 	}
 
 	if (!isAuth && (isCreatorRoute || isBrandRoute || isAdminRoute)) {
+		console.log('Redirecting unauthenticated user to login');
 		let from = pathname;
 		if (request.nextUrl.search) {
 			from += request.nextUrl.search;
@@ -62,5 +84,5 @@ function redirectBasedOnRole(role, baseUrl) {
 }
 
 export const config = {
-	matcher: ['/login', '/creator/:path*', '/brand/:path*', '/admin/:path*'],
+	matcher: ['/login', '/creator/:path*', '/brand/:path*', '/admin/:path*', '/creator/signup', '/brand/signup'],
 };

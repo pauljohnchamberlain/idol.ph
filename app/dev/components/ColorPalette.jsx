@@ -19,6 +19,7 @@ export function ColorPalette({ isDark = false }) {
 		{ name: 'border', variable: '--border' },
 		{ name: 'input', variable: '--input' },
 		{ name: 'ring', variable: '--ring' },
+		{ name: 'neutral', variable: '--neutral' },
 	];
 
 	return (

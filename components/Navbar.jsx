@@ -269,10 +269,16 @@ function Navbar() {
 					</div>
 
 					<Sheet open={isOpen} onOpenChange={setIsOpen}>
-						<SheetTrigger className='sm:hidden'>
-							<Menu className='h-6 w-6' />
+						<SheetTrigger asChild>
+							<Button
+								variant='ghost'
+								className='mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden'
+							>
+								<Menu className='h-6 w-6' />
+								<span className='sr-only'>Toggle Menu</span>
+							</Button>
 						</SheetTrigger>
-						<SheetContent side='right'>
+						<SheetContent side='left' className='bg-white/95 backdrop-blur-md'>
 							<div className='flex flex-col space-y-2 mt-4'>
 								{showDashboardLink && (
 									<Link

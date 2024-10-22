@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function privacy() {
+export default function Privacy() {
   return (
     <div>privacy</div>
   )

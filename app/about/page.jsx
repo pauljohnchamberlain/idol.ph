@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function press() {
+export default function About() {
   return (
-    <div>press</div>
+    <div>About</div>
   )
 }

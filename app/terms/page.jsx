@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
-export default function terms() {
-  return (
-    <div>terms</div>
-  )
+export default function Terms() {
+	return <div>terms</div>;
 }

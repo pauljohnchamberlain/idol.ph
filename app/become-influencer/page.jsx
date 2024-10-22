@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function becomeInfluencer() {
+export default function BecomeInfluencer() {
 	return <div>becomeInfluencer</div>;
 }

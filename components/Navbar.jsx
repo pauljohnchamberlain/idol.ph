@@ -9,6 +9,7 @@ import { displayName, getInitials } from '@/utils/string-helpers';
 
 import MaxWidthWrapper from './MaxWidthWrapper';
 import { buttonVariants } from './ui/button';
+import { Button } from '@/components/ui/button';
 import TextShine from '@/components/TextShine';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {

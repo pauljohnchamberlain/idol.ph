@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function pricing() {
+export default function Pricing() {
 	return <div>pricing</div>;
 }

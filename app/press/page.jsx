@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function press() {
+export default function Press() {
   return (
     <div>press</div>
   )

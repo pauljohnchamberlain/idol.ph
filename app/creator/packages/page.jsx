@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import PackageCreationModal from '../components/PackageCreationModal';
 
 export default function PackagesPage() {
@@ -23,7 +24,10 @@ export default function PackagesPage() {
 					<DialogTrigger asChild>
 						<Button>CREATE PACKAGE</Button>
 					</DialogTrigger>
-					<DialogContent className="sm:max-w-[425px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1100px] w-full">
+					<DialogContent className='sm:max-w-[425px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1100px] w-full max-w-[95vw] max-h-[95vh] overflow-hidden bg-white'>
+						<VisuallyHidden asChild>
+							<DialogTitle>Create Package</DialogTitle>
+						</VisuallyHidden>
 						<PackageCreationModal />
 					</DialogContent>
 				</Dialog>

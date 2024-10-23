@@ -135,6 +135,43 @@ function Navbar() {
 								</DropdownMenu>
 							</>
 						)}
+						{session?.user?.role === 'brand' && (
+							<>
+								<Link
+									href='/brand/campaign-flow'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+										className: 'w-full justify-center',
+									})}
+									onClick={closeMenu}
+								>
+									Work with Creators
+								</Link>
+								<Link
+									href='/brand/post-job'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+										className: 'w-full justify-center',
+									})}
+									onClick={closeMenu}
+								>
+									Work With Talent
+								</Link>
+								<Link
+									href='/brand/search'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+										className: 'w-full justify-center',
+									})}
+									onClick={closeMenu}
+								>
+									Talent Search
+								</Link>
+							</>
+						)}
 						{status !== 'authenticated' ? (
 							<>
 								<Link
@@ -279,7 +316,7 @@ function Navbar() {
 								<span className='sr-only'>Toggle Menu</span>
 							</Button>
 						</SheetTrigger>
-						<SheetContent side='left' className='bg-white/95 backdrop-blur-md'>
+						<SheetContent side='right' className='bg-white/95 backdrop-blur-md'>
 							<div className='flex flex-col space-y-2 mt-4'>
 								{showDashboardLink && (
 									<Link
@@ -379,6 +416,43 @@ function Navbar() {
 												</AccordionContent>
 											</AccordionItem>
 										</Accordion>
+									</>
+								)}
+								{session?.user?.role === 'brand' && (
+									<>
+									<Link
+									href='/brand/campaign-flow'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+										className: 'w-full justify-center',
+									})}
+									onClick={closeMenu}
+								>
+									Work with Creators
+								</Link>
+								<Link
+									href='/brand/post-job'
+									className={buttonVariants({
+										variant: 'ghost',
+										size: 'sm',
+										className: 'w-full justify-center',
+									})}
+									onClick={closeMenu}
+								>
+									Work With Talent
+								</Link>
+										<Link
+											href='/brand/search'
+											className={buttonVariants({
+												variant: 'ghost',
+												size: 'sm',
+												className: 'w-full justify-center',
+											})}
+											onClick={closeMenu}
+										>
+											Talent Search
+										</Link>
 									</>
 								)}
 								{status !== 'authenticated' ? (

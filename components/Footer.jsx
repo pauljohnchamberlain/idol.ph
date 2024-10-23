@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Facebook, Instagram, Twitter, Youtube, Linkedin } from 'lucide-react';
+import { FaFacebook, FaInstagram, FaTiktok, FaXTwitter, FaYoutube, FaLinkedin, FaHeart } from 'react-icons/fa6';
 import Link from 'next/link';
 import NewsletterForm from '@/components/NewsletterForm';
 
@@ -10,7 +10,30 @@ export default function Footer() {
 			<div className='container mx-auto px-6 py-12'>
 				<div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
 					<div className='space-y-4'>
-						<h3 className='text-lg font-semibold'>Quick Links</h3>
+						<h3 className='text-lg font-semibold'>For Talent</h3>
+						<ul className='space-y-2'>
+							<li>
+								<Link href='/become-influencer' className='hover:underline'>
+									Become An Influencer
+								</Link>
+							</li>
+							<li>
+								<Link href='/case-studies' className='hover:underline'>
+									Case Studies
+								</Link>
+							</li>
+							<li>
+								<Link href='/how-it-works' className='hover:underline'>
+									How It Works
+								</Link>
+							</li>
+							<li>
+								<Link href='/talent-tips' className='hover:underline'>
+									Talent Tips
+								</Link>
+							</li>
+						</ul>
+						<h3 className='text-lg font-semibold'>For Brands</h3>
 						<ul className='space-y-2'>
 							<li>
 								<Link href='/find-influencers' className='hover:underline'>
@@ -18,18 +41,13 @@ export default function Footer() {
 								</Link>
 							</li>
 							<li>
-								<Link href='/become-influencer' className='hover:underline'>
-									Become an Influencer
+								<Link href='/about' className='hover:underline'>
+									Pricing For Brands
 								</Link>
 							</li>
 							<li>
-								<Link href='/pricing' className='hover:underline'>
-									Pricing
-								</Link>
-							</li>
-							<li>
-								<Link href='/case-studies' className='hover:underline'>
-									Case Studies
+								<Link href='/how-it-works' className='hover:underline'>
+									How It Works
 								</Link>
 							</li>
 						</ul>
@@ -48,13 +66,26 @@ export default function Footer() {
 								</Link>
 							</li>
 							<li>
+								<Link href='/contact' className='hover:underline'>
+									Contact
+								</Link>
+							</li>
+						</ul>
+						<h3 className='text-lg font-semibold'>Resources</h3>
+						<ul className='space-y-2'>
+							<li>
+								<Link href='#' className='hover:underline'>
+									Help Center
+								</Link>
+							</li>
+							<li>
 								<Link href='/press' className='hover:underline'>
 									Press
 								</Link>
 							</li>
 							<li>
-								<Link href='/contact' className='hover:underline'>
-									Contact
+								<Link href='/blog' className='hover:underline'>
+									Blog
 								</Link>
 							</li>
 						</ul>
@@ -78,6 +109,18 @@ export default function Footer() {
 								</Link>
 							</li>
 						</ul>
+						<p>
+							Made with <FaHeart className='inline-block text-red-500 h-4 w-4' aria-label='love' /> by{' '}
+							<a
+								href='https://x.com/pjchambo'
+								target='_blank'
+								aria-label='X (formerly Twitter)'
+								className='text-muted-foreground hover:text-foreground flex items-center space-x-2'
+							>
+								<FaXTwitter className='h-5 w-5' />
+								<span>@pjchambo</span>
+							</a>
+						</p>
 					</div>
 					<div className='space-y-4'>
 						<h3 className='text-lg font-semibold'>Newsletter</h3>
@@ -89,19 +132,22 @@ export default function Footer() {
 					<p className='text-sm text-muted-foreground'>&copy; {new Date().getFullYear()} idol. All rights reserved.</p>
 					<div className='flex space-x-4 mt-4 md:mt-0'>
 						<a href='#' aria-label='Facebook' className='text-muted-foreground hover:text-foreground'>
-							<Facebook className='h-5 w-5' />
+							<FaFacebook className='h-5 w-5' />
 						</a>
 						<a href='#' aria-label='Instagram' className='text-muted-foreground hover:text-foreground'>
-							<Instagram className='h-5 w-5' />
+							<FaInstagram className='h-5 w-5' />
 						</a>
-						<a href='#' aria-label='Twitter' className='text-muted-foreground hover:text-foreground'>
-							<Twitter className='h-5 w-5' />
+						<a href='#' aria-label='TikTok' className='text-muted-foreground hover:text-foreground'>
+							<FaTiktok className='h-5 w-5' />
+						</a>
+						<a href='#' aria-label='X (formerly Twitter)' className='text-muted-foreground hover:text-foreground'>
+							<FaXTwitter className='h-5 w-5' />
 						</a>
 						<a href='#' aria-label='YouTube' className='text-muted-foreground hover:text-foreground'>
-							<Youtube className='h-5 w-5' />
+							<FaYoutube className='h-5 w-5' />
 						</a>
 						<a href='#' aria-label='LinkedIn' className='text-muted-foreground hover:text-foreground'>
-							<Linkedin className='h-5 w-5' />
+							<FaLinkedin className='h-5 w-5' />
 						</a>
 					</div>
 				</div>

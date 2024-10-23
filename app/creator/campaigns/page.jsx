@@ -46,6 +46,7 @@ export default function CampaignPage() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [displayedCampaigns, setDisplayedCampaigns] = useState(allCampaigns.slice(0, 9));
 	const [hasMore, setHasMore] = useState(true);
+	const [isMobile, setIsMobile] = useState(false);
 
 	const { ref, inView } = useInView({
 		threshold: 0,
@@ -74,6 +75,15 @@ export default function CampaignPage() {
 			}
 		}
 	}, [inView, hasMore, displayedCampaigns]);
+
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
 
 	return (
 		<div className='flex h-screen bg-gray-100 overflow-hidden'>
@@ -148,22 +158,36 @@ export default function CampaignPage() {
 				<div className='p-8'>
 					<div className='flex justify-between items-center mb-8'>
 						<h1 className='text-3xl font-bold text-gray-800'>Campaigns</h1>
-						<div className='flex items-center space-x-4'>
+						{!isMobile && (
+							<div className='flex items-center space-x-4'>
+								<Input
+									type='text'
+									placeholder='Search campaigns...'
+									value={searchTerm}
+									onChange={(e) => setSearchTerm(e.target.value)}
+									className='max-w-xs'
+								/>
+								<Button variant='outline' size='icon' onClick={() => setViewMode('grid')} className='p-2.5'>
+									<Grid className='h-5 w-5' />
+								</Button>
+								<Button variant='outline' size='icon' onClick={() => setViewMode('list')} className='p-2.5'>
+									<List className='h-5 w-5' />
+								</Button>
+							</div>
+						)}
+					</div>
+
+					{isMobile && (
+						<div className='mb-4'>
 							<Input
 								type='text'
 								placeholder='Search campaigns...'
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className='max-w-xs'
+								className='w-full'
 							/>
-							<Button variant='outline' size='icon' onClick={() => setViewMode('grid')} className='p-2.5'>
-								<Grid className='h-5 w-5' />
-							</Button>
-							<Button variant='outline' size='icon' onClick={() => setViewMode('list')} className='p-2.5'>
-								<List className='h-5 w-5' />
-							</Button>
 						</div>
-					</div>
+					)}
 
 					<div
 						className={cn(

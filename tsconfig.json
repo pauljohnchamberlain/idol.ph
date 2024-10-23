@@ -30,7 +30,8 @@
 		"**/*.tsx",
 		"app/api/uploadthing/route.js",
 		"app/api/uploadthing/core.js",
-		"utils/uploadthing.js"
+		"utils/uploadthing.js",
+		"app/brand/search/page.jsx"
 	],
 	"exclude": ["node_modules"]
 }

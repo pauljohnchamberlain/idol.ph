@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import ProfileSetupForm from '../components/ProfileSetupForm';
+import ProfileSetupForm from "../components/ProfileSetupForm";
 
 export default function CreatorProfileSetup() {
-	return (
-		<div className='min-h-screen'>
-			<ProfileSetupForm />
-		</div>
-	);
+  return (
+    <div className="min-h-screen">
+      <ProfileSetupForm />
+    </div>
+  );
 }

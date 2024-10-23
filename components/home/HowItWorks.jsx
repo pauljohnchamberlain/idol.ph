@@ -1,8 +1,8 @@
 const HowItWorks = () => {
   return (
     <div>
-      <div className='row-holder'>
-        <h2 className='row-title' id='howitworks'>
+      <div className="row-holder">
+        <h2 className="row-title" id="howitworks">
           How idol Works
         </h2>
         <h3 className="row-subtitle">

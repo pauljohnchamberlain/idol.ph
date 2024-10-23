@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Cookies() {
-  return (
-    <div>cookies</div>
-  )
+  return <div>cookies</div>;
 }

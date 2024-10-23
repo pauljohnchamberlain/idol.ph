@@ -1,4 +1,9 @@
-import { UploadButton, UploadDropzone, Uploader, generateReactHelpers } from '@uploadthing/react';
+import {
+  UploadButton,
+  UploadDropzone,
+  Uploader,
+  generateReactHelpers,
+} from "@uploadthing/react";
 
 export const { useUploadThing, uploadFiles } = generateReactHelpers();
 

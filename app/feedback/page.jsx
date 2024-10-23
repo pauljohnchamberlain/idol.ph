@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export default function Feedback() {
-	return <div>feedback</div>;
+  return <div>feedback</div>;
 }

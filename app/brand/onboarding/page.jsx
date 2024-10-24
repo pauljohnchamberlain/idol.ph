@@ -14,7 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Camera, Heart, HelpCircle } from "lucide-react";
 
-export function OnboardingFlowComponent() {
+export default function OnboardingFlowComponent() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",

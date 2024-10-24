@@ -1,13 +1,14 @@
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import HowItWorks from "../components/home/HowItWorks";
 import HomeCard from "../components/home/HomeCard";
-import SellingPoints from "../components/home/SellingPoints";
-import JobsBoard from "../components/home/JobsBoard";
-import MediaKit from "../components/home/MediaKit";
-import CollabHub from "../components/home/CollabHub";
-import PitchLikeAPro from "../components/home/PitchLikeAPro";
-import Faqs from "../components/home/Faqs";
+// import SellingPoints from "../components/home/SellingPoints";
+// import JobsBoard from "../components/home/JobsBoard";
+// import MediaKit from "../components/home/MediaKit";
+// import CollabHub from "../components/home/CollabHub";
+// import PitchLikeAPro from "../components/home/PitchLikeAPro";
+// import Faqs from "../components/home/Faqs";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 const creators = [
   {
@@ -20,6 +21,13 @@ const creators = [
   },
   // Add more static creator data as needed
 ];
+
+const SellingPoints = dynamic(() => import("@/components/home/SellingPoints"));
+const JobsBoard = dynamic(() => import("@/components/home/JobsBoard"));
+const MediaKit = dynamic(() => import("@/components/home/MediaKit"));
+const CollabHub = dynamic(() => import("@/components/home/CollabHub"));
+const PitchLikeAPro = dynamic(() => import("@/components/home/PitchLikeAPro"));
+const Faqs = dynamic(() => import("@/components/home/Faqs"));
 
 export default function HomePage() {
   return (

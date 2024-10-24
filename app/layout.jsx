@@ -1,11 +1,8 @@
 // app/layout.js
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/components/Navbar";
 import Footer from "@/components/Footer";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "./api/uploadthing/core";
 import { Providers } from "./providers";
 import SellingPoints from "@/components/home/SellingPoints";
 import JobsBoard from "@/components/home/JobsBoard";
@@ -24,7 +21,6 @@ export default function App({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <Providers>
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <ThemeProvider
             attribute="class"
             defaultTheme="light"

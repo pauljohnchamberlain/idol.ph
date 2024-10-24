@@ -104,7 +104,9 @@ function MessagesCard() {
         <p className="text-gray-600 mb-4">
           You have unread messages. Chat with brands that want to work with you.
         </p>
-        <Button>GO TO MESSAGES</Button>
+        <Link href="/creator/messenger">
+          <Button>GO TO MESSAGES</Button>
+        </Link>
       </CardContent>
     </Card>
   );
